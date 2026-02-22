@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Novel Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-top: 5px;
+            cursor: pointer;
+        }
+
+        .chapter {
+            background: white;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+
+        .delete-btn {
+            background: red;
+            color: white;
+            border: none;
+        }
+
+        .edit-btn {
+            background: orange;
+            color: white;
+            border: none;
+        }
+
+        .save-btn {
+            background: green;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Novel Online</h1>
+
+    <div class="form-group">
+        <input type="text" id="chapterTitle" placeholder="Judul Bab">
+    </div>
+
+    <div class="form-group">
+        <textarea id="chapterContent" rows="6" placeholder="Isi cerita..."></textarea>
+    </div>
+
+    <button onclick="addChapter()">Tambah Bab</button>
+
+    <div id="chapterList"></div>
+</div>
+
+<script>
+    let chapters = JSON.parse(localStorage.getItem("chapters")) || [];
+
+    function saveToStorage() {
+        localStorage.setItem("chapters", JSON.stringify(chapters));
+    }
+
+    function renderChapters() {
+        const list = document.getElementById("chapterList");
+        list.innerHTML = "";
+
+        chapters.forEach((chapter, index) => {
+            const div = document.createElement("div");
+            div.className = "chapter";
+
+            div.innerHTML = `
+                <h3>${chapter.title}</h3>
+                <p>${chapter.content.replace(/\n/g, "<br>")}</p>
+                <button class="edit-btn" onclick="editChapter(${index})">Edit</button>
+                <button class="delete-btn" onclick="deleteChapter(${index})">Hapus</button>
+            `;
+
+            list.appendChild(div);
+        });
+    }
+
+    function addChapter() {
+        const title = document.getElementById("chapterTitle").value.trim();
+        const content = document.getElementById("chapterContent").value.trim();
+
+        if (title === "" || content === "") {
+            alert("Judul dan isi tidak boleh kosong!");
+            return;
+        }
+
+        chapters.push({ title, content });
+        saveToStorage();
+        renderChapters();
+
+        document.getElementById("chapterTitle").value = "";
+        document.getElementById("chapterContent").value = "";
+    }
+
+    function deleteChapter(index) {
+        if (confirm("Yakin ingin menghapus bab ini?")) {
+            chapters.splice(index, 1);
+            saveToStorage();
+            renderChapters();
+        }
+    }
+
+    function editChapter(index) {
+        const newTitle = prompt("Edit Judul:", chapters[index].title);
+        const newContent = prompt("Edit Isi:", chapters[index].content);
+
+        if (newTitle !== null && newContent !== null) {
+            chapters[index].title = newTitle;
+            chapters[index].content = newContent;
+            saveToStorage();
+            renderChapters();
+        }
+    }
+
+    renderChapters();
+</script>
+
+</body>
+</html>
