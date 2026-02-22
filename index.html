@@ -1,150 +1,820 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>Novel Online</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PELINDUNG BAYANG MASA LALU</title>
 
-        h1 {
-            text-align: center;
-        }
+<style>
+body{
+    font-family: Georgia, serif;
+    background:#f4f4f4;
+    margin:0;
+    padding:20px;
+}
+.container{
+    max-width:850px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+.cover{text-align:center;}
+.cover img{
+    width:220px;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+h1{margin:10px 0 5px;}
+.author{color:gray;margin-bottom:30px;}
 
-        .container {
-            max-width: 800px;
-            margin: auto;
-        }
+.toc{
+    margin-bottom:30px;
+    padding:15px;
+    background:#fafafa;
+    border-radius:8px;
+}
+.toc button{
+    display:block;
+    width:100%;
+    margin-bottom:6px;
+    padding:8px;
+    border:none;
+    border-radius:6px;
+    background:#eaeaea;
+    cursor:pointer;
+}
+.toc button:hover{background:#dcdcdc;}
 
-        .form-group {
-            margin-bottom: 10px;
-        }
+.chapter h2{
+    border-bottom:2px solid #ddd;
+    padding-bottom:10px;
+}
+p{
+    text-align:justify;
+    line-height:1.9;
+    margin-bottom:15px;
+}
 
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-
-        button {
-            padding: 8px 12px;
-            margin-top: 5px;
-            cursor: pointer;
-        }
-
-        .chapter {
-            background: white;
-            padding: 15px;
-            margin-top: 15px;
-            border-radius: 5px;
-        }
-
-        .delete-btn {
-            background: red;
-            color: white;
-            border: none;
-        }
-
-        .edit-btn {
-            background: orange;
-            color: white;
-            border: none;
-        }
-
-        .save-btn {
-            background: green;
-            color: white;
-            border: none;
-        }
-    </style>
+.nav-buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:space-between;
+}
+.nav-buttons button{
+    padding:10px 16px;
+    border:none;
+    border-radius:6px;
+    background:#333;
+    color:white;
+    cursor:pointer;
+}
+.nav-buttons button:disabled{
+    background:#aaa;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
-    <h1>Novel Online</h1>
 
-    <div class="form-group">
-        <input type="text" id="chapterTitle" placeholder="Judul Bab">
-    </div>
+<div class="cover">
+    <img id="coverImage">
+    <h1 id="novelTitle"></h1>
+    <div class="author" id="novelAuthor"></div>
+</div>
 
-    <div class="form-group">
-        <textarea id="chapterContent" rows="6" placeholder="Isi cerita..."></textarea>
-    </div>
+<div class="toc">
+    <h3>📚 Daftar Isi</h3>
+    <div id="tocList"></div>
+</div>
 
-    <button onclick="addChapter()">Tambah Bab</button>
+<div class="chapter" id="chapterContent"></div>
 
-    <div id="chapterList"></div>
+<div class="nav-buttons">
+    <button id="prevBtn">⬅ Sebelumnya</button>
+    <button id="nextBtn">Berikutnya ➡</button>
+</div>
+
 </div>
 
 <script>
-    let chapters = JSON.parse(localStorage.getItem("chapters")) || [];
 
-    function saveToStorage() {
-        localStorage.setItem("chapters", JSON.stringify(chapters));
+/* ===============================
+   ✏ EDIT ISI NOVEL DI SINI
+   =============================== */
+
+const novel = {
+    title: "PELINDUNG BAYANG MASA LALU",
+    author: "M JUNAEDI",
+    cover: "https://picsum.photos/300/400",
+
+    chapters: [
+
+{ title:"Bab 1 - CERMIN YANG RETAK", content:`Kota ini tidak pernah tidur, namun bagi Fahriza (45 tahun), dunia seolah berhenti
+berputar sejak dua puluh tahun yang lalu.
+Di sebuah kontrakan sempit yang pengap oleh bau kopi instan dan tumpukan koran
+lama, Fahriza duduk menatap cermin di atas wastafel yang berkerak. Wajah di
+cermin itu tampak lelah—garis-garis halus di dahi dan kantung mata yang
+menghitam menceritakan kisah seorang pria yang menyerah pada keadaan.
+"Kenapa kau begitu lemah?" bisiknya pada bayangannya sendiri.
+Suara itu terdengar dingin, asing, seolah bukan berasal dari tenggorokannya. Ini
+adalah salah satu momen di mana "dirinya yang lain" mengambil alih. Fahriza
+memiliki hati yang terlalu lembut, mudah tersentuh oleh pengemis di jalan hingga ia
+sendiri sering lupa makan karena uangnya diberikan pada orang lain. Namun, di
+saat yang sama, ada kemarahan yang membeku di dalam dadanya—sebuah
+kepribadian dingin yang muncul sebagai mekanisme pertahanan atas intimidasi
+yang ia terima setiap hari di tempat kerja.
+Hari itu, bosnya kembali memaki Fahriza di depan rekan kerja lainnya hanya karena
+kesalahan kecil pada laporan. Fahriza hanya diam. Ia menerima makian itu seperti
+spons yang menyerap air. Namun di dalam batinnya, ia berteriak.
+Kehampaan di Tengah Keramaian
+Malam semakin larut. Fahriza merebahkan tubuhnya di kasur tipis. Pikirannya
+melayang pada sosok Lolita, satu-satunya cahaya yang pernah ia miliki sebelum
+semuanya hancur. Penyesalan itu datang lagi, seperti ombak yang menghantam
+karang. Ia merasa andai saja dulu ia lebih agresif, andai saja ia tidak membiarkan
+kemiskinan membungkam suaranya, mungkin hidupnya tidak akan sepecundang ini.
+"Kau bukan siapa-siapa, Fahriza. Kau hanya sisa-sisa dari masa lalu yang gagal,"
+bisik sebuah suara di sudut gelap kamarnya.
+Fahriza tersentak. Ia menoleh, namun tidak ada siapa-siapa. Itu adalah "Sang
+Bayang"—manifestasi dari ketakutan dan rasa bersalahnya yang mulai meneror
+psikisnya secara nyata.
+Transisi: Hitam yang Menelan
+Tiba-tiba, suhu di kamar itu turun drastis. Lampu pijar di langit-langit berkedip tidak
+stabil sebelum akhirnya meledak, menyisakan kegelapan total.
+Fahriza berusaha berdiri, namun kakinya terasa berat seolah tertanam di lantai. Ia
+mulai merasa pusing hebat. Bayangan-bayangan di dinding mulai bergerak,
+memanjang, dan membentuk pusaran hitam di tengah ruangan.
+"Aku ingin kembali..." gumam Fahriza dengan isak tangis yang tertahan. "Aku ingin
+memperbaiki semuanya."
+Kegelapan itu menyambar. Pandangan Fahriza menghitam total. Suara bising kota
+berganti dengan suara riuh rendah yang sangat ia kenal: suara lonceng sekolah
+yang berkarat dan tawa mengejek dari segerombolan remaja.
+Saat Fahriza membuka mata, ia tidak lagi berada di kontrakannya yang sempit. Ia
+berdiri di sebuah lapangan sekolah yang gersang. Tangannya yang tadinya keriput
+kini halus dan kecil. Ia melihat ke bawah—seragam putih biru yang kusam dan
+kekecilan melekat di tubuhnya yang kurus.
+Tahun 1994.
+Fahriza kembali menjadi anak laki-laki berusia 15 tahun yang baru saja kehilangan
+segalanya setelah kebangkrutan orang tuanya. Dan di hadapannya, berdiri sosok
+yang paling ia takuti sekaligus ia rindukan`},
+
+{ title:"Bab 2 - LUKA YANG TERBUKA KEMBALI", content:`Bau debu kapur dan aroma tanah basah menusuk indra penciuman Fahriza. Ia
+berdiri mematung di pinggir lapangan basket yang retak. Di telinganya, suara riuh
+rendah siswa SMP terdengar seperti dengungan lebah yang menyakitkan.
+"Fahri! Woii, budek ya?!"
+Sebuah dorongan keras di bahu kirinya membuat Fahriza terhuyung. Ia menoleh
+dan jantungnya hampir copot. Di depannya berdiri sosok bertubuh besar dengan
+seragam yang sengaja dikeluarkan—Raka, anak orang kaya yang dulu menjadi
+mimpi buruknya setiap hari.
+Fahriza yang sekarang berusia 45 tahun dalam tubuh 15 tahun itu merasa gemetar.
+Sifat perasanya yang mudah terintimidasi seolah bangkit kembali secara instan.
+"Ma... maaf," bisik Fahriza spontan. Kebiasaan meminta maaf meskipun tidak
+bersalah adalah kutukan yang ia bawa dari masa depan.
+"Maaf, maaf! Mana uang setoran lu? Jangan bilang bokap lu yang bangkrut itu
+beneran udah jatuh miskin sampai nggak bisa kasih lu jajan!" Raka tertawa, diikuti
+oleh kawan-kawannya.
+Pertentangan di Dalam Diri
+Di dalam kepala Fahriza, terjadi pergulatan hebat. Sisi dingin dan teliti dari masa
+depannya mencoba menganalisis situasi. Ini hanya memori, Fahriza. Kau tahu apa
+yang akan terjadi, bisik sisi logisnya. Namun, rasa takut yang tertanam sejak kecil di
+sel-sel tubuhnya jauh lebih kuat.
+Ia merogoh saku celananya. Hanya ada sekeping koin dan selembar uang kertas
+yang lusuh—satu-satunya bekal untuk ongkos pulang dan makan siang. Di saat
+itulah, matanya menangkap sosok di kejauhan.
+Lolita.
+Gadis itu berdiri di koridor kelas dengan rambut dikuncir kuda, mendekap sebuah
+buku catatan. Ia menatap ke arah Fahriza dengan tatapan iba, namun juga penuh
+kekecewaan. Inilah momen yang selalu disesali Fahriza: saat ia membiarkan dirinya
+dihina di depan satu-satunya gadis yang ia cintai tanpa pernah membela diri.
+Munculnya Sang Bayang
+Tiba-tiba, udara di sekitar Fahriza seolah membeku. Orang-orang di lapangan
+bergerak melambat seperti rekaman video yang rusak. Warna dunia memudar
+menjadi abu-abu, kecuali satu sosok yang berdiri tepat di belakang Raka.
+Sosok itu tidak memiliki wajah. Hanya siluet hitam pekat yang mengenakan jubah
+yang seolah menyerap cahaya di sekitarnya. Sang Bayang.
+"Lihat dirimu, Fahriza," suara Sang Bayang menggema langsung di dalam
+tengkoraknya, dingin dan menusuk. "Bahkan dengan kesempatan kedua, kau
+tetaplah pecundang yang sama. Kau pikir kau bisa melindungi Lolita? Kau bahkan
+tidak bisa melindungi harga dirimu sendiri."
+Sang Bayang melangkah mendekat, tangannya yang hitam legam menyentuh bahu
+Raka, seolah memberikan kekuatan jahat pada perundung itu agar bertindak lebih
+kejam.
+"Hajar saja dia, Raka! Dia cuma sampah yang tidak berguna!" teriak teman-teman
+Raka yang gerakannya mulai kembali normal.
+Ledakan Kepribadian
+Raka menarik kerah baju Fahriza hingga kaki remaja itu berjinjit. "Mana uangnya"
+Sesuatu dalam diri Fahriza retak. Bayangan masa depannya yang penuh intimidasi,
+kemiskinan di kontrakannya, dan wajah meremehkan dari bosnya di kantor, menyatu
+dengan cengkeraman Raka saat ini.
+Kepribadiannya yang dingin tiba-tiba mengambil kendali penuh. Mata Fahriza yang
+tadinya sayu dan ketakutan mendadak berubah tajam dan menusuk. Ia tidak melihat
+Raka sebagai anak SMP yang nakal, melainkan sebagai objek yang harus ia
+singkirkan untuk mendapatkan kembali jati dirinya.
+Tangan Fahriza bergerak cepat, lebih cepat dari yang seharusnya bisa dilakukan
+anak seusianya. Ia tidak memukul, melainkan mencengkeram pergelangan tangan
+Raka pada titik saraf yang tepat—teknik yang pernah ia pelajari secara otodidak saat
+ia sering merasa terancam di masa depan.
+"Lepaskan..." suara Fahriza terdengar berat, tidak menyerupai anak 15 tahun. "Atau
+aku akan mematahkan jarimu sebelum kau sempat berkedip."
+Seluruh lapangan mendadak hening. Raka meringis kesakitan, matanya membelalak
+melihat perubahan drastis pada "si pendiam" Fahriza. Di ujung koridor, Lolita
+menatap dengan mulut ternganga.
+Namun, Sang Bayang di belakang mereka justru tertawa tanpa suara. Ia tahu, setiap
+perubahan yang dilakukan Fahriza di sini akan menuntut harga yang sangat mahal
+di masa depan`},
+
+{ title:"Bab 3 - HARGA SEBUAH KEBERANIAN", content:`Raka terpekik. Wajahnya yang semula penuh kemenangan kini memucat karena
+rasa sakit yang tajam di pergelangan tangannya. "Sakit! Lepasin, Sialan!"
+Fahriza tidak melepaskannya. Sisi dingin dari dirinya yang berusia 45 tahun sedang
+berkuasa. Ia menatap mata Raka dengan kekosongan yang mengerikan. Di mata
+itu, tidak ada lagi Fahriza si anak miskin yang penakut; yang ada hanyalah seorang
+pria yang telah kehilangan segalanya dan tidak punya beban untuk menghancurkan
+apa pun di depannya.
+"Dengarkan aku," bisik Fahriza, suaranya pelan namun sanggup membungkam
+keriuhan lapangan. "Kemiskinan orang tuaku bukan alasan bagimu untuk merasa
+menjadi Tuhan. Mulai detik ini, jika kau menyentuhku atau menyebut nama orang
+tuaku lagi... kau akan belajar betapa gelapnya dunia ini."
+Fahriza menghempaskan tangan Raka dengan kasar. Raka terjatuh ke tanah,
+memegangi tangannya yang memerah. Teman-temannya yang biasanya garang kini
+hanya terpaku, tak berani maju. Mereka merasakan aura yang sangat asing
+terpancar dari tubuh kecil Fahriza—aura kematian yang dibawa dari masa depan.
+Kehadiran Lolita
+Fahriza mengatur napasnya. Jantungnya berdegup kencang, bukan karena takut,
+melainkan karena adrenalin yang sudah lama tidak ia rasakan. Ia membalikkan
+badan dan mendapati Lolita masih berdiri di sana.
+Gadis itu melangkah mendekat. Matanya yang jernih menatap Fahriza dengan
+campuran rasa kagum dan ngeri.
+"Fahri?" suara Lolita bergetar. "Kamu... kamu nggak apa-apa? Kamu kelihatan beda
+banget hari ini."
+Fahriza menatap Lolita. Rasa sakit di hatinya berdenyut kembali. Inilah sosok yang
+di masa depan hanya ada dalam mimpinya. Di masa depan, Lolita menghilang
+setelah sebuah tragedi yang melibatkan Raka dan ayahnya. Fahriza tahu dia
+kembali ke sini bukan hanya untuk menghajar perundung, tapi untuk memastikan
+Lolita tetap selamat.
+"Aku baik-baik saja, Loli," sahut Fahriza lembut, namun nada bicaranya terlalu
+dewasa untuk anak seusianya. "Aku hanya lelah menjadi target."
+Teror Sang Bayang
+Saat Fahriza hendak melangkah menuju kelas bersama Lolita, dunia di sekitarnya
+kembali bergetar. Langit yang tadinya cerah mendadak berubah menjadi merah
+darah di mata Fahriza. Sang Bayang muncul kembali, kali ini ia berdiri tepat di
+antara Fahriza dan Lolita.
+Sang Bayang tidak berwujud padat, ia seperti asap hitam yang pekat. Ia
+membisikkan sesuatu yang membuat darah Fahriza membeku.
+"Kau pikir dengan membalas Raka, kau sudah menang?" tawa Sang Bayang
+terdengar parau. "Lihatlah tanganmu, Fahriza. Setiap kali kau menggunakan 'dirimu
+yang dingin' untuk mengubah masa lalu, kau sedang mengikis keberadaan dirimu
+yang asli. Kau tidak sedang memperbaiki masa lalu... kau sedang menghapusnya."
+Tiba-tiba, telapak tangan Fahriza mulai terlihat transparan. Ia tersentak.
+"Jika kau terlalu banyak berubah, kau tidak akan punya masa depan untuk ditempati.
+Kau akan terjebak di sini selamanya sebagai bayangan, sama sepertiku," lanjut
+Sang Bayang.
+Pilihan Sulit
+Fahriza menyadari sebuah kenyataan pahit. Karakter "agresif" yang ia inginkan
+ternyata memiliki efek samping yang fatal. Jika ia menjadi terlalu kejam atau terlalu
+berbeda dari jati dirinya yang asli, garis waktu akan menolaknya.
+Baru saja ia berpikir demikian, dari arah gerbang sekolah, muncul sebuah mobil
+hitam mewah. Itu adalah mobil ayah Raka, seorang pengusaha korup yang nantinya
+akan menghancurkan keluarga Lolita.
+Dalam ingatan aslinya, hari ini adalah hari di mana ayah Raka pertama kali bertemu
+dengan ayah Lolita untuk memulai "kerjasama" yang berujung pengkhianatan.
+Fahriza dihadapkan pada pilihan:
+1. Diam dan membiarkan sejarah berulang agar ia tetap aman secara fisik.
+2. Bertindak lebih jauh untuk menghancurkan kerjasama itu, meski nyawanya
+(dan keberadaannya di masa depan) menjadi taruhannya.
+"Fahri? Kenapa kamu bengong?" Lolita menyentuh lengan Fahriza. Sentuhan itu
+terasa nyata, hangat, dan penuh harapan.
+Fahriza mengepalkan tangannya. "Loli, jangan biarkan ayahmu bertemu dengan pria
+di mobil itu. Apa pun yang terjadi."`},
+
+{ title:"Bab 4 - RETAKAN DIGARIS WAKTU", content:`Sentuhan Lolita di lengannya membuat dunia kembali normal—atau setidaknya terlihat normal. Langit kembali biru. Suara riuh siswa terdengar lagi. Tapi telapak tangan Fahriza masih terasa dingin, dan ketika ia melirik sekilas, transparansi itu belum sepenuhnya hilang.
+
+Mobil hitam itu berhenti tepat di depan gerbang. Pintu belakang terbuka perlahan. Seorang pria berjas abu-abu turun dengan senyum yang terlalu halus untuk disebut tulus. Ayah Raka.
+
+Jantung Fahriza berdetak keras.
+
+“Fahri… kamu kenal dia?” bisik Lolita.
+
+“Aku kenal masa depannya,” jawab Fahriza pelan.
+
+Lolita mengernyit. “Apa?”
+
+Fahriza tidak punya waktu menjelaskan. Dari kejauhan, ia melihat sosok ayah Lolita—Pak Bima—berjalan keluar dari ruang administrasi sekolah. Wajahnya cerah, seperti seseorang yang akan mendapat peluang besar. Dalam garis waktu asli, inilah awal kehancuran itu. Kerja sama investasi bodong. Hutang. Tekanan. Ancaman. Dan tragedi yang menelan Lolita.
+
+Sang Bayang kembali muncul di sudut penglihatannya, seperti noda hitam yang tak bisa dihapus.
+
+“Kau akan melawan takdir lagi?” bisiknya. “Berapa harga yang siap kau bayar?”
+
+Fahriza mengabaikannya.
+
+“Loli,” katanya cepat, “ayahmu harus masuk ke ruang guru sekarang. Katakan ada dokumen yang perlu ditandatangani. Tahan dia sepuluh menit saja.”
+
+“Apa? Tapi—”
+
+“Percaya padaku!”
+
+Nada suaranya membuat Lolita terdiam. Ada keyakinan aneh di sana. Tanpa bertanya lagi, ia berlari menuju ayahnya.
+
+Fahriza sendiri melangkah menuju gerbang.
+
+Setiap langkah terasa berat. Seolah tanah berusaha menahannya. Sang Bayang kini berjalan sejajar dengannya.
+
+“Jika kau terlalu jauh mengubah alur, kau akan retak,” katanya. “Kau bukan Tuhan.”
+
+“Aku tidak ingin jadi Tuhan,” balas Fahriza lirih. “Aku hanya ingin berhenti jadi korban.”
+
+Ayah Raka melihatnya mendekat. “Kau anak kelas sebelas, bukan? Mana kepala sekolah?”
+
+Fahriza menatap pria itu tanpa rasa takut. Dulu, ia gemetar bahkan hanya mendengar namanya. Sekarang, yang ia rasakan hanya dingin.
+
+“Kepala sekolah sedang rapat. Tapi sepertinya Anda salah tempat.”
+
+Pria itu tersenyum tipis. “Oh ya?”
+
+“Investasi yang Anda tawarkan? Itu akan membuat banyak orang kehilangan segalanya.”
+
+Wajah pria itu menegang sepersekian detik—cukup untuk membuktikan kebenarannya.
+
+“Kau berbicara seperti orang dewasa.”
+
+“Aku sudah melihat akibatnya.”
+
+Angin mendadak berembus kencang. Dunia di sekitar Fahriza kembali bergetar. Telapak tangannya makin transparan, menjalar hingga ke pergelangan.
+
+Sang Bayang tertawa pelan.
+“Sedikit lagi.”
+
+Pria itu mendekat, suaranya menurun tajam. “Anak kecil sepertimu sebaiknya tidak ikut campur urusan orang tua.”
+
+Fahriza menahan rasa pusing yang mulai menyerang. Ia sadar, jika ia terus menekan, garis waktu akan melawan lebih keras.
+
+Tiba-tiba—
+
+“Maaf, Pak. Ayah saya tidak bisa bertemu hari ini.”
+
+Lolita berdiri di antara mereka.
+
+Pak Bima muncul di belakangnya, tampak ragu. “Sepertinya kita jadwalkan ulang saja.”
+
+Ayah Raka memandang mereka berdua dengan senyum yang kini jelas dipaksakan. “Baiklah. Lain waktu.”
+
+Mobil hitam itu pergi.
+
+Begitu kendaraan itu menghilang dari pandangan, kaki Fahriza melemas. Ia hampir jatuh jika Lolita tidak menahannya.
+
+“Fahri!” seru Lolita panik. “Tangan kamu—”
+
+Transparansi itu perlahan memudar, tapi tidak sepenuhnya. Ada retakan samar seperti kaca tipis di kulitnya.
+
+Sang Bayang berdiri di depan mereka, kini lebih jelas dari sebelumnya.
+
+“Kau berhasil menunda,” katanya. “Bukan membatalkan.”
+
+“Aku tidak butuh kemenangan sempurna,” jawab Fahriza pelan. “Aku hanya butuh waktu.”
+
+Sang Bayang menyipitkan mata hitamnya.
+“Waktu adalah hal pertama yang akan habis darimu.”
+
+Lalu ia menghilang.
+
+Lolita menatap Fahriza dengan mata berkaca-kaca. “Kamu sebenarnya siapa, Fahri?”
+
+Pertanyaan itu menggantung di udara.
+
+Fahriza menatap langit yang kini tampak terlalu tenang.
+
+“Aku?” ia tersenyum tipis.
+“Aku cuma seseorang yang tidak ingin kehilanganmu lagi.”
+
+Dan untuk pertama kalinya sejak ia kembali ke masa lalu, ia sadar—pertempuran ini bukan hanya tentang mengubah takdir.
+
+Ini tentang menjaga kemanusiaannya sendiri sebelum ia benar-benar berubah menjadi bayanga`},
+
+{ title:"Bab 5 - RUANG UKS DAN CERMIN KEJUJURAN", content:`Guncangan realitas itu membuat Fahriza ambruk. Kepalanya terasa seperti
+dihantam palu godam. Teriakan "Kebakaran!" yang ia ciptakan tadi memicu
+kepanikan di sekolah, namun bagi Fahriza, dunia seakan bergerak dalam slow-motion. Paru-parunya sesak, bukan karena asap yang ia buat, melainkan karena
+bisikan Sang Bayang yang terus menguliti mentalnya.
+Petugas sekolah menemukannya terduduk lemas di balik semak. Karena wajahnya
+yang pucat pasi dan tubuhnya yang gemetar, mereka membawanya ke ruang UKS.
+Keheningan yang Menindas
+Ruang UKS itu sepi, hanya ada suara detak jam dinding yang terdengar seperti
+dentuman drum di telinga Fahriza. Ia berbaring di atas tempat tidur dengan sprei
+putih yang bau karbol. Di sampingnya, sebuah cermin berdiri tegak—cermin yang
+sama yang sering ia gunakan untuk meratapi nasibnya di masa depan.
+"Kenapa kau melakukan itu?"
+Suara itu lembut, namun membuat Fahriza tersentak. Lolita (versi 15 tahun) duduk
+di kursi di samping tempat tidurnya. Matanya sembab, mungkin karena kepanikan
+tadi atau karena melihat ayahnya hampir terlibat dalam keributan.
+"Aku... aku hanya ingin membantu, Loli," suara Fahriza serak. Sisi lembutnya
+muncul, ia merasa ingin menangis melihat kekhawatiran di wajah gadis itu.
+"Membantu dengan membakar sekolah?" Lolita menggeleng. "Itu bukan kamu,
+Fahri. Fahri yang aku kenal itu orang yang paling sabar, bukan orang yang
+melakukan hal berbahaya seperti itu."
+Konfrontasi Sang Bayang
+Tiba-tiba, bayangan Lolita di lantai memanjang. Bayangan itu lepas dari tubuhnya
+dan berdiri tegak di sudut ruangan, berubah menjadi sosok pekat tanpa wajah. Sang
+Bayang kini muncul di tempat terang, menunjukkan kekuatannya yang semakin
+besar seiring dengan ketidakstabilan mental Fahriza.
+"Dia benar, Fahriza," Sang Bayang berjalan mendekat, setiap langkahnya
+meninggalkan bekas hitam di lantai UKS. "Kau telah membunuh 'Fahriza yang
+dicintainya'. Kau menggantinya dengan monster penuh dendam dari masa depan.
+Kau pikir kau melindunginya? Kau hanya sedang melindungi egomu yang terluka."
+Fahriza bangkit dari tempat tidur, mengabaikan pusingnya. Ia menatap Sang Bayang
+dengan amarah. "Aku melakukannya agar dia tidak menderita! Agar ayahnya tidak
+bangkrut! Agar dia tidak menghilang dari hidupku!"
+Lolita menatap Fahriza dengan ngeri. "Fahri... kamu bicara sama siapa?"
+Kepribadian Ganda yang Bertabrakan
+Di detik itu, Fahriza menyadari betapa kacaunya kondisinya. Di mata Lolita, ia
+hanyalah seorang remaja yang sedang meracau sendirian. Sisi dingin Fahriza
+mendesaknya untuk tetap fokus pada tujuan: menghancurkan Pak Surya. Namun,
+sisi lembutnya hancur melihat ketakutan di mata Lolita.
+Sang Bayang tertawa, suara yang hanya bisa didengar oleh Fahriza. "Ayo, tunjukkan
+pada Lolita siapa kau sebenarnya. Tunjukkan padanya sisi dinginmu yang teliti, yang
+rela melakukan apa saja demi hasil. Bukankah itu karakter yang kau inginkan
+selama ini? Karakter yang 'agresif'?"
+Fahriza mencengkeram kepalanya. "Cukup!"
+Ia menatap cermin di sampingnya. Di dalam cermin, ia melihat dirinya yang berusia
+45 tahun—seorang pria paruh baya yang malang—sedang menangis, sementara di
+luar cermin, ia adalah remaja 15 tahun yang penuh amarah.
+"Aku mengerti sekarang," bisik Fahriza, kali ini suaranya tenang, perpaduan antara
+kebijaksanaan masa depan dan kelembutan masa lalu. "Kau bukan musuh dari luar,
+Sang Bayang. Kau adalah penyesalanku yang tidak mau memaafkan diri sendiri."
+Penebusan Pertama
+Fahriza menoleh kembali ke arah Lolita. Ia meraih tangan gadis itu. Tangannya tidak
+lagi transparan. Kehangatan kembali mengalir.
+"Loli, maafkan aku. Aku tidak akan merubah apa pun lagi," ucap Fahriza tulus.
+"Tapi aku butuh bantuanmu. Ayahmu sedang dalam bahaya besar, bukan karena
+api, tapi karena kertas yang ia tanda tangani. Kita harus bicara padanya... dengan
+cara yang benar. Bukan dengan kekacauan, tapi dengan kebenaran."
+Sang Bayang mengerang, tubuhnya sedikit memudar saat Fahriza memilih jalan
+komunikasi daripada agresif buta. Namun, teror belum berakhir. Di luar UKS, suara
+langkah sepatu mahal Pak Surya mendekat. Ia tahu siapa yang memulai
+"kebakaran" kecil itu, dan ia tidak akan membiarkan seorang anak miskin merusak
+rencana besarnya.`},
+
+{ title:"Bab 6 - CATUR DI MEJA PERUNDINGAN ", content:`Pintu UKS terbuka dengan sentakan kasar. Pak Surya berdiri di sana, auranya
+mengintimidasi seperti pemangsa yang merasa mangsanya mencoba melarikan diri.
+Di belakangnya, Ayah Lolita tampak bingung dan cemas.
+"Jadi, ini anak yang berteriak kebakaran tadi?" Pak Surya melangkah masuk,
+sepatunya berbunyi nyaring di lantai keramik. Ia menatap Fahriza dengan
+pandangan merendahkan. "Kamu tahu, Nak? Kebohongan kecilmu itu hampir
+merusak kesepakatan besar."
+Fahriza merasakan adrenalinnya bergejolak. Sisi dinginnya ingin segera menyerang
+balik dengan makian, namun ia menahannya. Ia menoleh ke arah Ayah Lolita—
+sosok pria jujur yang kelak akan hancur jika kontrak itu ditandatangani.
+Pertaruhan Logika
+"Saya tidak berbohong soal bahaya, Pak," ucap Fahriza tenang, sambil berdiri tegak
+di depan tempat tidur. Ia tidak lagi membungkuk seperti Fahriza yang dulu. "Hanya
+saja, bahayanya bukan berasal dari api, tapi dari apa yang ada di kantong jas Pak
+Surya."
+Ayah Lolita mengerutkan kening. "Fahri, apa maksudmu? Pak Surya ini rekan bisnis
+yang berniat baik membantu keluarga kita."
+Fahriza menarik napas panjang. Ia menggunakan memori masa depannya—
+pengetahuannya tentang skandal perusahaan Pak Surya yang baru terbongkar
+sepuluh tahun kemudian di berita nasional.
+"Pak, apakah perusahaan Mitra Sejahtera milik Pak Surya sudah mendaftarkan izin
+operasionalnya di kementerian?" tanya Fahriza teliti. "Atau kontrak yang Bapak
+bawa tadi hanyalah pengalihan aset untuk menutupi hutang piutang di bank pusat?"
+Wajah Pak Surya yang semula merah padam karena marah, tiba-tiba menjadi pucat.
+Ia tersentak. Bagaimana mungkin seorang anak SMP tahu tentang struktur
+perusahaannya yang paling rahasia?
+Serangan Terakhir Sang Bayang
+Melihat Fahriza mulai menguasai keadaan, Sang Bayang yang memudar di sudut
+ruangan kembali mengamuk. Ia menciptakan halusinasi di mata Fahriza. Tiba-tiba,
+ruang UKS itu tampak seperti runtuh. Suara-suara intimidasi dari masa depan—
+suara bosnya yang memaki, suara penagih hutang, suara tawa Raka—bergema
+memekakkan telinga.
+"Berhenti, Fahriza!" Sang Bayang berbisik tepat di telinganya. "Jika kau
+menghancurkan rencana Surya sekarang, Raka akan membalas dendam lebih
+kejam pada Lolita malam ini. Kau menyelamatkan uangnya, tapi kau mengorbankan
+nyawanya! Pilih, Fahriza!"
+Fahriza terhuyung. Pandangannya mengabur. Ini adalah teror psikologis yang paling
+berat. Antagonis di kepalanya mencoba membuatnya ragu pada kebaikan yang
+sedang ia lakukan.
+Pilihan Berani
+Fahriza mencengkeram pinggiran meja. Ia menatap Lolita yang sedang memegang
+lengannya dengan takut. Fahriza menyadari satu hal: selama ini ia kalah karena ia
+selalu takut pada "kemungkinan buruk". Sekarang, ia tidak akan membiarkan
+bayangan masa depan mendikte tindakannya.
+"Pak," kata Fahriza pada Ayah Lolita, mengabaikan Sang Bayang. "Jangan percaya
+pada janji manis. Periksa pasal 14 di kontrak itu. Jika Bapak menandatanganinya,
+Bapak tidak hanya memberikan modal, tapi juga menjaminkan rumah ini dan masa
+depan Lolita."
+Ayah Lolita terdiam. Ia melihat keraguan yang nyata di mata Pak Surya yang kini
+mulai berkeringat dingin. Tanpa sepatah kata pun, Pak Surya membalikkan badan
+dan pergi meninggalkan UKS dengan terburu-buru. Ia menyadari bahwa anak di
+depannya bukanlah anak biasa.
+Plot Twist: Bayangan yang Menjelma
+Keheningan menyelimuti ruangan. Ayah Lolita keluar untuk mengejar Pak Surya,
+ingin meminta penjelasan lebih lanjut. Tinggallah Fahriza dan Lolita.
+"Fahri... bagaimana kamu bisa tahu semua itu?" Lolita menatapnya dengan penuh
+kekaguman, namun ada jarak yang mulai terasa.
+Fahriza hendak menjawab, namun ia melihat pantulan di cermin UKS. Sang Bayang
+tidak menghilang. Sebaliknya, siluet hitam itu kini mulai mengambil bentuk wajah
+yang sangat ia kenali.
+Wajah itu bukan wajah orang asing. Wajah Sang Bayang adalah wajah Fahriza
+sendiri versi 45 tahun, namun dengan mata yang penuh kebencian.
+"Kau pikir ini sudah selesai?" Sang Bayang (Fahriza Tua) tersenyum sinis dari dalam
+cermin. "Kau baru saja mengubah sejarah. Sekarang, bersiaplah melihat 'masa
+depan' yang kau ciptakan menghilang dari ingatanmu."
+Tiba-tiba, ingatan Fahriza tentang hidupnya di masa depan—kantornya,
+kontrakannya, bahkan wajah ibunya—mulai memudar seperti tinta yang terkena air.
+Ia mulai lupa siapa dirinya yang sebenarnya`},
+
+{ title:"Bab 7 - INGATAN YANG MEMUDAR", content:`Fahriza mencengkeram kepalanya yang terasa seolah sedang ditarik oleh ribuan
+benang. Di dalam kepalanya, bayangan apartemen sempitnya di masa depan
+mengabur, wajah bos yang memakinya menjadi siluet tanpa rupa, dan yang paling
+mengerikan—suara ibunya di masa tua mulai hilang dari pendengarannya.
+"Setiap perubahan memiliki harga, Fahriza," suara Sang Bayang di dalam cermin
+kini terdengar lebih nyata, lebih berat. "Kau menghapus kemiskinanmu, maka kau
+menghapus alasanmu untuk kembali ke masa depan."
+Fahriza menatap tangannya. Gemetar itu bukan lagi karena takut, melainkan karena
+eksistensinya sedang bergeser. Ia bukan lagi pria 45 tahun yang terjebak di tubuh
+remaja; ia mulai benar-benar menjadi remaja 15 tahun yang kebingungan.
+Keberanian yang Tersisa
+"Fahri? Kamu kenapa?" Lolita mendekat, wajahnya penuh kecemasan. Ia
+memegang bahu Fahriza, dan sentuhan itu adalah satu-satunya hal yang terasa
+nyata bagi Fahriza saat ini.
+Fahriza menatap Lolita. Ia tahu, dalam hitungan menit, kesadaran dewasanya
+mungkin akan hilang sepenuhnya. Ia akan menjadi Fahriza remaja yang pendiam
+dan kikuk lagi, tanpa perlindungan dari pengalaman masa depannya.
+"Loli, dengarkan aku," Fahriza bicara dengan cepat, napasnya memburu. "Apapun
+yang terjadi nanti... kalau aku kelihatan aneh, atau kalau aku lupa apa yang baru
+saja kukatakan... tolong jangan pernah biarkan ayahmu menandatangani dokumen
+dari siapapun tanpa memeriksanya dua kali. Dan satu lagi..."
+Fahriza ragu sejenak. Ia melihat Sang Bayang di cermin tersenyum mengejek.
+"Satu lagi apa, Fahri?"
+"Jangan pernah merasa kasihan padaku. Aku... aku ingin kamu melihatku sebagai
+seseorang yang bisa menjagamu, bukan seseorang yang harus kamu kasihani."
+Serangan Balik Raka
+Belum sempat Lolita menjawab, pintu UKS kembali terbuka. Kali ini bukan Pak
+Surya, melainkan Raka dan dua temannya. Wajah Raka merah padam, matanya
+menyiratkan dendam yang lebih besar karena ayahnya baru saja dimarahi oleh
+kepala sekolah akibat laporan "kekacauan" yang dipicu Fahriza.
+"Heh, pengecut! Keluar lu!" Raka menarik baju Fahriza, menyeretnya dari tempat
+tidur.
+Biasanya, Fahriza dewasa akan dengan mudah mematikan gerakan Raka. Namun
+sekarang, saat kesadaran dewasanya memudar, rasa takut lamanya bangkit
+kembali. Fahriza merasa kecil. Ia merasa lemah.
+"Lepasin, Raka!" teriak Lolita mencoba melerai, namun ia didorong menjauh oleh
+teman Raka.
+Puncak Konflik Internal
+Fahriza tersungkur di lantai UKS. Di depannya, Raka sudah siap melayangkan
+pukulan. Di sampingnya, cermin besar itu menunjukkan Sang Bayang yang sedang
+tertawa terbahak-bahak.
+"Ayo, Fahriza! Mana sisi dinginmu? Mana detektif teliti yang kau banggakan? Kau
+hanyalah anak miskin yang tidak punya apa-apa!" teriak Sang Bayang.
+Fahriza menutup matanya rapat-rapat. Di tengah kegelapan batinnya, ia mencari
+sisa-sisa memori dewasanya. Ia tidak mencari amarahnya, ia mencari tujuan
+utamanya: Pelindung.
+"Aku bukan detektif," bisik Fahriza di lantai. "Aku bukan pria paruh baya yang gagal.
+Aku adalah orang yang akan memastikan Lolita punya masa depan yang lebih baik."
+Tiba-tiba, sebuah kekuatan baru muncul. Bukan kekuatan fisik, melainkan
+ketenangan yang luar biasa. Fahriza membuka matanya. Ia tidak lagi melihat Raka
+sebagai monster, melainkan sebagai anak remaja yang hanya mengandalkan
+kekuasaan ayahnya yang rapuh.
+Langkah Tak Terduga
+Saat tinju Raka meluncur, Fahriza tidak menghindar dengan teknik bela diri hebat. Ia
+justru menangkap tangan Raka dan menatap matanya dengan tatapan yang sangat
+dalam—tatapan seorang pria yang sudah melihat akhir dari segalanya.
+"Raka," suara Fahriza sangat tenang hingga membuat Raka merinding. "Ayahmu
+baru saja kehilangan kesempatan untuk menipu keluarga ini. Jika kau memukulku
+sekarang, kau hanya akan membuktikan bahwa kau sama gagalnya dengan
+ayahmu."
+Raka terhenti. Kepalan tangannya bergetar. Ada sesuatu dalam suara Fahriza yang
+membuatnya merasa kerdil.
+Di saat yang sama, sosok Sang Bayang di cermin memekik kesakitan. Cahaya
+putih mulai merayap dari tangan Fahriza yang memegang Raka. Fahriza tidak
+melawan bayangan itu dengan kebencian, tapi dengan penerimaan atas masa
+lalunya yang pahit.
+Apa yang akan terjadi di Part 8?
+Raka mengalami pergolakan batin yang aneh setelah mendengar ucapan Fahriza.
+Sementara itu, Fahriza mulai menyadari bahwa untuk mengalahkan Sang Bayang
+sepenuhnya, ia harus mendatangi sebuah tempat rahasia yang menjadi saksi bisu
+"dosa besar" masa lalunya yang belum terungkap.`},
+
+{ title:"Bab 8 - PUING-PUING MASA LALU", content:`Raka melepaskan cengkeramannya. Ia mundur selangkah, menatap telapak
+tangannya sendiri yang gemetar seolah baru saja menyentuh aliran listrik. Matanya
+yang tadi liar oleh amarah, kini meredup dalam kebingungan. Kata-kata Fahriza
+tentang "kegagalan ayahnya" menghantam titik paling rapuh dalam dirinya:
+ketakutan bahwa ia hanyalah bayangan dari orang tuanya.
+"Lu... lu nggak tahu apa-apa soal bokap gua!" teriak Raka, namun suaranya pecah.
+Ia berbalik dan lari keluar dari UKS, diikuti teman-temannya yang kebingungan.
+Fahriza terduduk di lantai, napasnya tersengal. Keheningan kembali melanda,
+namun kali ini terasa berbeda. Sang Bayang di dalam cermin tidak lagi tertawa.
+Sosok itu tampak gelisah, bentuknya terus berubah-ubah antara Fahriza dewasa
+yang kuyu dan gumpalan asap hitam.
+Penyelidikan yang Terlupa
+"Fahri, kamu bicara apa tadi? Soal perusahaan Pak Surya... soal kegagalan?" Lolita
+berlutut di sampingnya, menyentuh dahi Fahriza yang berkeringat dingin.
+Fahriza menatap Lolita. Ingatannya tentang masa depan sudah hampir 70%
+menguap. Ia mulai lupa nama bosnya, lupa alamat kontrakannya, tapi satu hal yang
+mendadak muncul dengan sangat tajam: sebuah amplop cokelat di gudang
+rumah lamanya.
+"Loli, aku harus pergi ke rumah lamaku. Sekarang," ucap Fahriza dengan nada
+mendesak.
+"Rumahmu yang dulu? Yang sudah disita bank itu?" Lolita terkejut. "Itu tempat
+terlarang, Fahri. Kata orang, tempat itu sudah dikuasai oleh orang-orang suruhan
+bank."
+"Ada sesuatu di sana yang menyebabkan orang tuaku jatuh miskin," Fahriza bangkit,
+kakinya masih agak goyah. "Bukan karena bisnis yang gagal secara alami. Ada
+pengkhianatan... dan pelakunya ada di sekolah ini."
+Perjalanan Menembus Kabut
+Fahriza berlari keluar sekolah, mengabaikan teriakan petugas keamanan. Ia
+meminjam sepeda tua milik penjaga sekolah yang tergeletak di parkiran. Di
+belakangnya, Lolita bersikeras ikut, membonceng dengan wajah cemas.
+Sepanjang perjalanan, atmosfer kota berubah. Kabut tipis mulai turun meski hari
+masih siang. Sang Bayang tidak lagi diam di cermin; ia kini terbang di samping
+Fahriza, membisikkan keraguan.
+"Jangan ke sana, Fahriza. Jika kau membuka rahasia itu, kau akan membenci dirimu
+sendiri lebih dari kau membenci Pak Surya. Ada dosa yang orang tuamu
+sembunyikan darimu!"
+Fahriza mengertakkan gigi. "Aku tidak peduli! Aku lebih baik hancur karena
+kebenaran daripada hidup tenang dalam kebohongan!"
+Gudang Masa Lalu
+Mereka tiba di sebuah rumah tua berlantai dua yang temboknya sudah dipenuhi
+lumut dan coretan vandal. Pagar besinya digembok rantai besar. Fahriza tahu jalan
+tikus lewat jendela ruang bawah tanah yang engselnya rusak—pengetahuan yang ia
+bawa dari memori masa kecilnya.
+Setelah berhasil masuk, aroma pengap dan debu menyambut mereka. Fahriza
+langsung menuju gudang di bawah tangga. Ia mencari sebuah kotak kayu kecil yang
+tersembunyi di balik susunan bata yang longgar.
+"Ketemu," bisik Fahriza.
+Ia membuka kotak itu. Di dalamnya terdapat sebuah surat perjanjian lama dan
+beberapa foto. Salah satu foto menunjukkan Ayah Fahriza sedang menjabat tangan
+seorang pria yang wajahnya dicoret dengan tinta merah. Namun, ada satu detail
+yang membuat jantung Fahriza berhenti berdetak.
+Di pojok foto itu, ada sosok anak kecil yang memegang mainan—seorang anak yang
+sangat ia kenal. Bukan dirinya.
+"Loli... lihat ini," Fahriza menyodorkan foto itu.
+Plot Twist: Saudara dalam Bayang
+Lolita menutup mulutnya dengan tangan. "Ini... ini foto lama keluargaku, Fahri. Dan
+anak kecil itu... itu adikku yang meninggal karena sakit saat kami jatuh miskin dulu."
+Fahriza membaca surat di bawah foto tersebut. Surat itu bukan tentang investasi,
+melainkan tentang penebusan hutang nyawa. Ayah Fahriza ternyata pernah
+melakukan kesalahan fatal di masa lalu yang menyebabkan kerugian besar bagi
+keluarga Lolita, dan Pak Surya selama ini menggunakan rahasia itu untuk memeras
+kedua keluarga tersebut.
+Tiba-tiba, suara tepuk tangan terdengar dari kegelapan gudang.
+Sang Bayang muncul, tapi kali ini ia tidak lagi hitam pekat. Ia mulai menampakkan
+wujud manusia yang nyata. Ia mengenakan seragam sekolah yang sama dengan
+Fahriza, namun wajahnya adalah wajah Fahriza dengan senyum yang sangat jahat.
+"Selamat, Fahriza," ucap Sang Bayang dengan suara yang identik dengan suara
+Fahriza remaja. "Kau baru saja menemukan alasan kenapa kau 'selalu hidup
+kekurangan dan diintimidasi'. Itu bukan nasib. Itu adalah hukuman yang kau terima,karena dosa ayahmu. Dan sekarang, setelah kau tahu... apakah kau masih merasa
+layak untuk melindungi Lolita?"
+Fahriza terpaku. Sifat perasanya kembali terguncang hebat. Ia merasa dirinya
+adalah "pelindung" yang ternyata adalah "anak dari sang penghancur"`},
+
+{ title:"Bab 9 - LABIRIN PENEBUSAN", content:`Gudang itu mendadak terasa menyempit. Debu yang menari di sela cahaya lampu
+senter seolah membeku. Fahriza menatap foto di tangannya, lalu menatap Lolita.
+Rasa bersalah yang selama ini ia pikul karena "nasib buruk" kini berubah menjadi
+beban yang jauh lebih mengerikan: Rasa malu.
+"Lihatlah wajahnya, Fahriza," bisik Sang Bayang yang kini mewujud sempurna
+sebagai kembaran gelapnya. "Kau ingin menjadi pahlawannya, padahal darahmu
+adalah alasan dia kehilangan adiknya. Kau adalah pelindung yang lancung!"
+Lolita gemetar. Ia membaca surat itu dengan mata berkaca-kaca. "Jadi... ayahmu
+yang menyebabkan investasiku gagal total? Ayahmu yang membuat kami terusir?"
+Fahriza ingin bicara, tapi lidahnya kelu. Sifatnya yang perasa dan mudah tersentuh
+membuatnya ingin berlutut dan memohon ampun saat itu juga. Sisi lembutnya
+hancur berkeping-keping.
+Kedatangan Sang Pemangsa
+BRAK!
+Pintu kayu gudang ditendang hingga hancur. Cahaya senter yang lebih terang
+menyinari ruangan, membutakan mata mereka. Pak Surya melangkah masuk
+dengan senyum dingin, diikuti oleh dua pria berbadan tegap dan... Raka.
+Raka tampak pucat, ia berdiri di belakang ayahnya seperti prajurit yang kehilangan
+arah.
+"Drama keluarga yang mengharukan," ucap Pak Surya meremehkan. "Terima kasih,
+Fahriza. Kamu sudah membantuku menemukan dokumen asli itu. Selama ini aku
+mencarinya agar tidak ada bukti bahwa aku yang menghasut ayahmu untuk
+melakukan kesalahan itu."
+Fahriza tersentak. Sisi telitinya menangkap sesuatu. "Menghasut? Jadi ayahku
+bukan satu-satunya yang bersalah?"
+Pak Surya tertawa, sebuah tawa yang kering dan hampa. "Ayahmu itu orang baik
+yang bodoh, sama sepertimu. Aku menjanjikannya kekayaan agar dia bisa
+membelikanmu mainan mewah, tapi aku memberinya jalan pintas yang ilegal. Dia
+terjebak, dan keluarga Lolita yang jadi korbannya. Aku? Aku hanya penonton yang
+mengambil untung."
+Konfrontasi Terakhir: Dingin Melawan Bayang
+Di titik terendah ini, Fahriza merasakan sesuatu yang aneh. Sang Bayang yang
+tadinya mengejeknya, tiba-tiba terdiam. Bayangan itu menatap Pak Surya dengan
+kebencian yang sama besarnya dengan yang dirasakan Fahriza.
+"Fahriza..." suara Sang Bayang berubah. Tidak lagi mengejek, tapi penuh amarah
+yang terkendali. "Jangan biarkan dia menang lagi. Gunakan aku. Gunakan semua
+rasa sakit dari masa depanmu untuk menghentikannya sekarang."
+Fahriza memejamkan mata. Ia membiarkan kepribadian gandanya menyatu. Ia tidak
+lagi menolak "sisi dinginnya", tapi ia juga tidak membuang "sisi lembutnya". Ia
+menjadi satu pribadi yang utuh—seorang pria yang memiliki kebijaksanaan pria 45
+tahun dalam raga remaja yang berani.
+Fahriza berdiri perlahan. Tatapannya begitu tajam hingga Pak Surya menghentikan
+tawanya.
+"Pak Surya," kata Fahriza, suaranya rendah dan mengancam. "Anda pikir dengan
+mengambil dokumen ini, Anda aman? Anda lupa satu hal. Saya bukan anak kecil
+yang Anda kenal dulu."
+Fahriza merogoh saku celananya. Ia mengeluarkan sebuah alat perekam kecil—
+benda yang ia temukan di tas sekolahnya, yang entah bagaimana terbawa dari
+"masa depan" atau memang takdir menyediakannya di sana.
+"Rekaman pengakuan Anda tadi... sudah cukup untuk membuat Anda membusuk di
+penjara, bahkan sebelum Anda sempat menghancurkan keluarga Lolita," dusta
+Fahriza dengan wajah datar yang sangat meyakinkan. Ini adalah teknik intimidasi
+yang ia pelajari dari dunia keras di masa depannya.
+Plot Twist: Pilihan Raka
+Pak Surya panik. "Hajar dia! Ambil perekam itu!"
+Kedua pengawalnya maju, namun tiba-tiba Raka melangkah ke depan Fahriza. Ia
+merentangkan tangannya, melindungi orang yang tadinya ia rundung.
+"Cukup, Yah!" teriak Raka. Suaranya bergetar hebat. "Fahriza benar. Kita sudah jadi
+monster selama ini. Aku nggak mau jadi pengecut yang hidup di atas penderitaan
+orang lain lagi!"
+Kekacauan pecah. Di tengah keributan itu, Sang Bayang melesat dari tubuh
+Fahriza, menerjang Pak Surya seperti asap hitam yang mencekik. Itu adalah
+manifestasi dari semua penderitaan Fahriza selama 20 tahun yang kini berbalik
+menyerang sumber masalahnya.
+Penyelesaian (Resolusi)
+Dunia di sekitar Fahriza mulai berputar kembali. Cahaya putih yang menyilaukan
+menelan gudang itu. Ia merasakan tubuhnya ditarik kembali ke masa depan, tapi kali
+ini rasanya tidak menyakitkan.
+Ia melihat Lolita untuk terakhir kalinya. Gadis itu tersenyum, meski air mata masih
+mengalir di pipinya. "Terima kasih, Fahri... karena sudah berani."
+EPILOG: Terbangun dari Mimpi Buruk
+Fahriza membuka mata. Ia kembali berada di kontrakannya yang sempit. Namun,
+ada yang berbeda.
+Ia tidak lagi melihat cermin dengan rasa benci. Ia bangkit dan melihat ke atas meja.
+Di sana, ada sebuah surat undangan reuni sekolah. Ia melihat foto profil media
+sosialnya di ponsel. Ia bukan lagi seorang karyawan rendahan yang diintimidasi; ia
+adalah seorang konsultan hukum yang cukup sukses.
+Sejarah telah berubah. Meskipun ia tidak menjadi kaya raya secara instan,
+keberaniannya di masa lalu telah mengubah mentalitasnya. Ia tumbuh menjadi
+pribadi yang berani membela diri dan orang lain.
+Ponselnya bergetar. Sebuah pesan masuk dari nama yang sangat ia kenal.
+Lolita: "Fahri, jadi kan makan malam hari ini? Ayahku ingin bertemu denganmu, dia
+bilang ada dokumen bisnis lama yang ingin ia tunjukkan sebagai kenang-kenangan."
+Fahriza tersenyum. Ia menatap ke sudut ruangan. Sang Bayang masih ada di sana,
+namun tidak lagi menakutkan. Sosok itu kini hanya berupa bayangan biasa yang
+mengikuti langkahnya di bawah cahaya lampu—sebuah pengingat bahwa masa lalu
+tidak untuk disesali, tapi untuk dilindungi kebenarannya`},
+
+{ title:"Bab 10 - KEMBALINYA MASA LALU", conten:'LANJUT PART 2'}
+    ]
+};
+
+/* ===============================
+   JANGAN EDIT BAGIAN INI
+   =============================== */
+
+let currentChapter = 0;
+
+document.getElementById("novelTitle").innerText = novel.title;
+document.getElementById("novelAuthor").innerText = "Oleh: " + novel.author;
+document.getElementById("coverImage").src = novel.cover;
+
+const chapterContainer = document.getElementById("chapterContent");
+const tocList = document.getElementById("tocList");
+
+function renderTOC(){
+    novel.chapters.forEach((chapter, index)=>{
+        const btn = document.createElement("button");
+        btn.innerText = chapter.title;
+        btn.onclick = ()=>{
+            currentChapter = index;
+            renderChapter();
+            window.scrollTo(0,0);
+        };
+        tocList.appendChild(btn);
+    });
+}
+
+function renderChapter(){
+    const chapter = novel.chapters[currentChapter];
+    chapterContainer.innerHTML = `
+        <h2>${chapter.title}</h2>
+        <p>${chapter.content}</p>
+    `;
+    prevBtn.disabled = currentChapter === 0;
+    nextBtn.disabled = currentChapter === novel.chapters.length - 1;
+}
+
+prevBtn.onclick = ()=>{
+    if(currentChapter > 0){
+        currentChapter--;
+        renderChapter();
+        window.scrollTo(0,0);
     }
+};
 
-    function renderChapters() {
-        const list = document.getElementById("chapterList");
-        list.innerHTML = "";
-
-        chapters.forEach((chapter, index) => {
-            const div = document.createElement("div");
-            div.className = "chapter";
-
-            div.innerHTML = `
-                <h3>${chapter.title}</h3>
-                <p>${chapter.content.replace(/\n/g, "<br>")}</p>
-                <button class="edit-btn" onclick="editChapter(${index})">Edit</button>
-                <button class="delete-btn" onclick="deleteChapter(${index})">Hapus</button>
-            `;
-
-            list.appendChild(div);
-        });
+nextBtn.onclick = ()=>{
+    if(currentChapter < novel.chapters.length - 1){
+        currentChapter++;
+        renderChapter();
+        window.scrollTo(0,0);
     }
+};
 
-    function addChapter() {
-        const title = document.getElementById("chapterTitle").value.trim();
-        const content = document.getElementById("chapterContent").value.trim();
+renderTOC();
+renderChapter();
 
-        if (title === "" || content === "") {
-            alert("Judul dan isi tidak boleh kosong!");
-            return;
-        }
-
-        chapters.push({ title, content });
-        saveToStorage();
-        renderChapters();
-
-        document.getElementById("chapterTitle").value = "";
-        document.getElementById("chapterContent").value = "";
-    }
-
-    function deleteChapter(index) {
-        if (confirm("Yakin ingin menghapus bab ini?")) {
-            chapters.splice(index, 1);
-            saveToStorage();
-            renderChapters();
-        }
-    }
-
-    function editChapter(index) {
-        const newTitle = prompt("Edit Judul:", chapters[index].title);
-        const newContent = prompt("Edit Isi:", chapters[index].content);
-
-        if (newTitle !== null && newContent !== null) {
-            chapters[index].title = newTitle;
-            chapters[index].content = newContent;
-            saveToStorage();
-            renderChapters();
-        }
-    }
-
-    renderChapters();
 </script>
 
 </body>
